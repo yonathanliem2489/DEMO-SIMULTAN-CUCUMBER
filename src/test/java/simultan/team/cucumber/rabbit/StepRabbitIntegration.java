@@ -1,4 +1,4 @@
-package simultan.team.cucumber.mongo;
+package simultan.team.cucumber.rabbit;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -25,7 +25,7 @@ import simultan.team.cucumber.utils.TestUtils;
 
 
 @EnableConfigurationProperties(RestProperties.class)
-public class StepMongoIntegrationTest extends SpringIntegrationTest {
+public class StepRabbitIntegration extends SpringIntegrationTest {
 
     @Autowired
     private RestProperties restProperties;
@@ -37,12 +37,12 @@ public class StepMongoIntegrationTest extends SpringIntegrationTest {
     private ObjectMapper mapper;
 
     private List<String> PERSIST_EMPLOYEE =
-        Arrays.asList("yonathan","riska");
+        Arrays.asList("yonathan", "riska");
 
-    @When("^the client calls to test mongo$")
-    public void the_client_calls_to_test_mongo() throws Throwable {
+    @When("^the client calls to test rabbit")
+    public void the_client_calls_to_test_rabbit() throws Throwable {
 
-        Endpoint endpoint = restProperties.getMongoEndpoint();
+        Endpoint endpoint = restProperties.getRabbitEndpoint();
         URI setUpUri = TestUtils.setURI(endpoint.toBuilder().port(port).build());
         URI uri = UriComponentsBuilder.fromUri(setUpUri)
             .queryParam("employee",
@@ -51,14 +51,14 @@ public class StepMongoIntegrationTest extends SpringIntegrationTest {
         executeGet(uri);
     }
 
-    @Then("^the client mongo receives status code of (\\d+)$")
-    public void the_client_mongo_receives_status_code_of(int statusCode) throws Throwable {
+    @Then("^the client rabbit receives status code of (\\d+)$")
+    public void the_client_rabbit_receives_status_code_of(int statusCode) throws Throwable {
         final HttpStatus currentStatusCode = latestResponse.getTheResponse().getStatusCode();
         assertThat("status code is incorrect : " + latestResponse.getBody(), currentStatusCode.value(), is(statusCode));
     }
 
-    @And("^the client mongo receives server$")
-    public void the_client_mongo_receives_server_version_body() throws Throwable {
+    @And("^the client rabbit receives server$")
+    public void the_client_rabbit_receives_server_version_body() throws Throwable {
 
         List<Employee> response =
             mapper.readValue(latestResponse.getBody(),

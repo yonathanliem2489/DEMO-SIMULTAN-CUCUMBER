@@ -1,4 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   simultan.team.cucumber.mongo.DataPersistenceAutoConfiguration,\
   simultan.team.cucumber.mongo.MongoConfiguration,\
-  simultan.team.cucumber.rabbit.RabbitConfiguration
+  simultan.team.cucumber.rabbit.RabbitConfiguration,\
+  simultan.team.cucumber.kafka.KafkaConfiguration
